@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import background from '../background.png';
 
 const Login = () => {
-  const [form, setForm] = useState({ name: null, pass: null });
+  const [form, setForm] = useState({ email: null, pass: null });
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ form });
@@ -12,7 +12,7 @@ const Login = () => {
   return (
     <div className="max-[400px]:justify-center h-screen bg-[#FFFCF5] flex flex-col items-center gap-y-3 sm:p-3">
       <img className="max-[400px]:static max-h-[32vh] mt-0 absolute top-0" alt="background" src={background} />
-      <p className="max-[400px]:text-xl max-[240px]:text-base max-[400px]:mt-0 text-3xl text-[#3C4144]
+      <p className="max-[400px]:text-xl max-[240px]:text-base max-[400px]:mt-[-1.5rem] text-3xl text-[#3C4144]
       tracking-wider font-bold mt-[25vh]"
       >
         Welcome to Flightfull!
@@ -21,14 +21,15 @@ const Login = () => {
         className="xl:w-[33vw] sm:w-[40vw] flex flex-col py-3 px-5 gap-y-5 mt-2 bg-[#24536F] rounded max-w-full"
         onSubmit={(e) => handleSubmit(e)}
       >
-        <label htmlFor="name" className="w-full">
-          <p className="text-xl text-[#FFFCF5] mb-1">Username</p>
+        <label htmlFor="email" className="w-full">
+          <p className="text-xl text-[#FFFCF5] mb-1">Email</p>
           <input
             className="w-full sm:text-xl text-base text-[#3C4144] placeholder-[#3C4144] placeholder-opacity-50
             bg-[#FFFCF5] p-2 rounded"
-            type="text"
-            placeholder="Username"
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            name="email"
+            type="email"
+            placeholder="Email"
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
         </label>
         <label htmlFor="password" className="w-full">
@@ -36,6 +37,7 @@ const Login = () => {
           <input
             className="w-full sm:text-xl text-base text-[#3C4144] placeholder-[#3C4144] placeholder-opacity-50
             bg-[#FFFCF5] p-2 rounded"
+            name="password"
             type="password"
             placeholder="Password"
             onChange={(e) => setForm({ ...form, pass: e.target.value })}
