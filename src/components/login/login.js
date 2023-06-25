@@ -10,10 +10,10 @@ const Login = () => {
     console.log('submit login');
   };
   return (
-    <div className="h-screen bg-[#FFFCF5] flex flex-col items-center sm:justify-center gap-y-3 sm:p-3">
-      <img className="max-h-[50vh] mt-0 sm:absolute top-[-7%] sm:mt-0 mt-[-7%]" alt="background" src={background} />
-      <p className="max-[400px]:text-xl max-[240px]:text-base max-[400px]:mt-[-6vh] text-3xl text-[#3C4144]
-      tracking-wider font-bold sm:mt-[25vh] mt-[-11vh]"
+    <div className="max-[400px]:justify-center h-screen bg-[#FFFCF5] flex flex-col items-center gap-y-3 sm:p-3">
+      <img className="max-[400px]:static max-h-[32vh] mt-0 absolute top-0" alt="background" src={background} />
+      <p className="max-[400px]:text-xl max-[240px]:text-base max-[400px]:mt-0 text-3xl text-[#3C4144]
+      tracking-wider font-bold mt-[25vh]"
       >
         Welcome to Flightfull!
       </p>
