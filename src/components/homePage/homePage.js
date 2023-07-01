@@ -1,7 +1,12 @@
+import Navbar from '../navbar/navbar';
+
 const HomePage = () => (
-  <p className="text-3xl font-bold underline">
-    Home Page!
-  </p>
+  <>
+    <Navbar />
+    <p className="text-3xl font-bold underline">
+      Home Page!
+    </p>
+  </>
 );
 
 export default HomePage;
