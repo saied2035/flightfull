@@ -1,3 +1,10 @@
+@import url('https://fonts.cdnfonts.com/css/repo?styles=28975');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.active {
+  background-color: #97bf0f;
+  color: #fff;
+}
