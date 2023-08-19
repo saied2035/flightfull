@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 
 const Airline = ({
-  name, description, socialMedia, imgSrc,
+  name, description, socialMedia, imgSrc, display,
 }) => (
-  <div className="flex flex-auto flex-col w-32">
-    <img className="rounded-full object-cover object-center max-w-[246px] max-h-[184.64px]" alt="Airline Pic" src={imgSrc} />
+  <div className={`${display} flex-col h-fit w-[80%] min-[900px]:w-[40%] lg:w-[30%] flex-auto`}>
+    <img className="rounded-full mx-auto max-w-[150px] sm:max-w-[211.06px] sm:max-h-[158.42px] 2xl:max-h-[262px] 2xl:max-w-[350px] min-[2200px]:max-h-[337px] min-[2200px]:max-w-[450px] " alt="Airline Pic" src={imgSrc} />
     <h2 className="text-center font-['Repo'] font-bold mt-2">{name}</h2>
     <hr className="border-0 border-b-2 border-dotted w-28 mx-auto mt-4 mb-4" />
-    <p className="text-[#a9abaa] text-center font-semibold text-sm">{description}</p>
-    <ul className="flex gap-x-3 justify-center mt-auto pt-3">
+    <p className="text-[#a9abaa] text-center font-semibold pb-2 text-sm">{description}</p>
+    <ul className="flex gap-x-3 justify-center mt-auto">
       {
 socialMedia.map((link) => (
   <li key={link.name} className="group border p-3 border-[#e7e7e7] rounded-full scale-100 transition-all duration-500 hover:scale-125">
@@ -26,6 +26,7 @@ Airline.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   imgSrc: PropTypes.string.isRequired,
+  display: PropTypes.string.isRequired,
   socialMedia: PropTypes.arrayOf(PropTypes.shape({
     url: PropTypes.string.isRequired,
     image: PropTypes.func.isRequired,
