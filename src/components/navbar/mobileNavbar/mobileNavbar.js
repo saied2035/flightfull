@@ -17,7 +17,8 @@ const MobileNavbar = ({ routesArr, socialMediaArr }) => {
   return (
     <nav className={`sm:hidden flex flex-col gap-y-12 fixed max-w-full w-40 h-screen top-0 left-0
     transition-[background-color] duration-[650ms] z-50 
-    ${showList ? 'border-r-2 border-r-[#f8f8f8] bg-white' : 'bg-transparent'}`}
+    ${showList ? 'border-r-2 border-r-[#f8f8f8] bg-white pointer-events-auto' : `border-none bg-transparent 
+      pointer-events-none`}`}
     >
       <svg
         className={`absolute top-0 left-0 w-[15%] fill-black pointer-events-auto transition-all duration-700 

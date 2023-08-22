@@ -4,7 +4,7 @@ const Airline = ({
   name, description, socialMedia, imgSrc, display,
 }) => (
   <div className={`${display} flex-col h-fit w-[80%] min-[900px]:w-[40%] lg:w-[30%] flex-auto`}>
-    <img className="rounded-full mx-auto max-w-[150px] sm:max-w-[211.06px] sm:max-h-[158.42px] 2xl:max-h-[262px] 2xl:max-w-[350px] min-[2200px]:max-h-[337px] min-[2200px]:max-w-[450px] " alt="Airline Pic" src={imgSrc} />
+    <img className="mx-auto sm:h-[158.42px] min-[2200px]:h-[337px]" alt="Airline Pic" src={imgSrc} />
     <h2 className="text-center font-['Repo'] font-bold mt-2">{name}</h2>
     <hr className="border-0 border-b-2 border-dotted w-28 mx-auto mt-4 mb-4" />
     <p className="text-[#a9abaa] text-center font-semibold pb-2 text-sm">{description}</p>

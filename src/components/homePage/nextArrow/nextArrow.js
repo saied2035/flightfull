@@ -1,9 +1,16 @@
-const NextArrow = () => (
+import PropTypes from 'prop-types';
+
+const NextArrow = ({ slide, setSlide, length }) => (
   <svg
-    className="max-[250px]:absolute right-0 top-[10%] max-[250px]:w-[48px] static my-[10%] stroke-[#97bf0f] min-[450px]:stroke-white cursor-pointer w-auto min-[450px]:w-[70px] fill-[#97bf0f] min-[450px]:fill-white min-[450px]:bg-[#97bf0f] min-[450px]:border-[#97bf0f] min-[450px]:border min-[450px]:rounded-full
-      min-[450px]:rounded-r"
+    className={`${slide === length - 3 ? `pointer-events-none bg-transparent stroke-[#efefef] fill-[#efefef] border-none 
+    min-[450px]:border min-[450px]:border-[#efefef] min-[450px]:bg-[#efefef] min-[450px]:stroke-white 
+    min-[450px]:fill-white cursor-default` : `pointer-events-auto bg-transparent stroke-[#97bf0f] fill-[#97bf0f] 
+    border-none min-[450px]:border min-[450px]:border-[#97bf0f] min-[450px]:bg-[#97bf0f] min-[450px]:stroke-white 
+    min-[450px]:fill-white cursor-pointer`} max-[250px]:absolute right-0 top-[10%] 
+    max-[250px]:w-[48px] static my-[10%] w-auto min-[450px]:w-[70px] min-[450px]:rounded-full min-[450px]:rounded-r`}
     height="64px"
     viewBox="0 0 50 50"
+    onClick={() => setSlide(slide + 1)}
   >
     <path
       className="min-[450px]:translate-x-[10%] translate-x-[50%] translate-y-[25%]"
@@ -14,5 +21,9 @@ const NextArrow = () => (
     />
   </svg>
 );
-
+NextArrow.propTypes = {
+  slide: PropTypes.number.isRequired,
+  setSlide: PropTypes.func.isRequired,
+  length: PropTypes.number.isRequired,
+};
 export default NextArrow;
