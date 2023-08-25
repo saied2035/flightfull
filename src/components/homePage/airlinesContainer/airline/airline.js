@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 const Airline = ({
   name, description, socialMedia, imgSrc, display,
 }) => (
-  <div className={`airline ${display} flex-col h-fit w-[80%] min-[900px]:w-[40%] lg:w-[30%] flex-auto`}>
-    <img className="mx-auto sm:h-[158.42px] min-[2200px]:h-[337px]" alt="Airline Pic" src={imgSrc} />
+  <div className={`airline ${display} flex-col h-[24rem] overflow-hidden w-[80%] min-[900px]:w-[40%] lg:w-[30%] flex-auto`}>
+    <img className="mx-auto w-40 sm:w-auto sm:max-w-[90%] object-contain object-center h-auto sm:h-[50%]" alt="Airline Pic" src={imgSrc} />
     <h2 className="text-center font-['Repo'] font-bold mt-2">{name}</h2>
     <hr className="border-0 border-b-2 border-dotted w-28 mx-auto mt-4 mb-4" />
     <p className="text-[#a9abaa] text-center font-semibold pb-2 text-sm">{description}</p>
-    <ul className="flex gap-x-3 justify-center mt-auto">
+    <ul className="flex gap-x-3 justify-center">
       {
 socialMedia.map((link) => (
   <li key={link.name} className="group border p-3 border-[#e7e7e7] rounded-full scale-100 transition-all duration-500 hover:scale-125">
