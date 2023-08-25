@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 const Airline = ({
   name, description, socialMedia, imgSrc, display,
 }) => (
-  <div className={`${display} flex-col h-fit w-[80%] min-[900px]:w-[40%] lg:w-[30%] flex-auto`}>
+  <div className={`airline ${display} flex-col h-fit w-[80%] min-[900px]:w-[40%] lg:w-[30%] flex-auto`}>
     <img className="mx-auto sm:h-[158.42px] min-[2200px]:h-[337px]" alt="Airline Pic" src={imgSrc} />
     <h2 className="text-center font-['Repo'] font-bold mt-2">{name}</h2>
     <hr className="border-0 border-b-2 border-dotted w-28 mx-auto mt-4 mb-4" />

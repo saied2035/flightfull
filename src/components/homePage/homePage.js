@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaFacebookF, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
 import Navbar from '../navbar/navbar';
 import PreviousArrow from './previousArrow/previousArrow';
@@ -114,8 +114,25 @@ const HomePage = () => {
     },
   ];
   const { length } = staticAirlineList;
+  const resizeObserver = new ResizeObserver((entries) => {
+    const entry = entries[0];
+    if (entry.contentRect.width >= 1536) {
+      return slide > length - 4 ? setSlide(length - 4) : setSlide(slide);
+    }
+    if (entry.contentRect.width >= 1024) {
+      return slide > length - 3 ? setSlide(length - 3) : setSlide(slide);
+    }
+    if (entry.contentRect.width >= 900) {
+      return slide > length - 2 ? setSlide(length - 2) : setSlide(slide);
+    }
+    return slide > length - 1 ? setSlide(length - 1) : setSlide(slide);
+  });
+  useEffect(() => {
+    const pageContainer = document.querySelector('#page-container');
+    resizeObserver.observe(pageContainer);
+  }, [slide]);
   return (
-    <main className="flex max-h-screen h-screen max-w-[100vw]">
+    <main id="page-container" className="flex max-h-screen h-screen max-w-[100vw]">
       <Navbar />
       <section className="flex flex-col flex-auto">
         <h1 className="[word-spacing:4px] flex flex-col gap-y-2 justify-end text-center text-4xl tracking-wide font-bold basis-32 self-center font-['Repo']">
@@ -126,7 +143,7 @@ const HomePage = () => {
         <div className="max-[250px]:relative static w-[100vw] sm:w-full mx-auto flex-auto gap-x-3 flex justify-center">
           <PreviousArrow setSlide={setSlide} slide={slide} />
           <AirlinesContainer staticAirlineList={staticAirlineList} slide={slide} length={length} />
-          <NextArrow setSlide={setSlide} slide={slide} length={length} />
+          <NextArrow setSlide={setSlide} slide={slide} />
         </div>
       </section>
     </main>
