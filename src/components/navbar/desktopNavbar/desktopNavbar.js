@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import logo from '../flightful-logo.png';
 
 const DesktopNavbar = ({ routesArr, socialMediaArr }) => (
-  <nav className="sm:flex hidden relative flex-col gap-y-24 w-44 h-screen border-r-2 border-r-[#f8f8f8] bg-white">
+  <nav className="sm:flex hidden relative flex-col gap-y-12 min-[900px]:gap-y-24 w-96 h-screen border-r-2 border-r-[#f8f8f8] bg-white">
     <img
       className=" w-full transition-all duration-[650ms] ease-linear"
       src={logo}

@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
 import Airline from './airline/airline';
 
-const AirlinesContainer = ({ slide, length, staticAirlineList }) => {
+const AirlinesContainer = ({
+  slide, length, staticAirlineList, setIntersectionAirlines,
+}) => {
   const displayArr = ['flex', 'min-[900px]:flex hidden', 'lg:flex hidden', '2xl:flex hidden'];
   return (
     staticAirlineList.slice(slide, length).map((airline, index) => (
       <Airline
+        slide={slide}
+        index={index}
+        setIntersectionAirlines={setIntersectionAirlines}
         display={index <= 3 ? displayArr[index] : 'hidden'}
         key={airline.name}
         name={airline.name}
@@ -19,6 +24,7 @@ const AirlinesContainer = ({ slide, length, staticAirlineList }) => {
 AirlinesContainer.propTypes = {
   slide: PropTypes.number.isRequired,
   length: PropTypes.number.isRequired,
+  setIntersectionAirlines: PropTypes.func.isRequired,
   staticAirlineList: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
@@ -30,4 +36,5 @@ AirlinesContainer.propTypes = {
     })).isRequired,
   }).isRequired).isRequired,
 };
+
 export default AirlinesContainer;

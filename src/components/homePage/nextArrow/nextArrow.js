@@ -1,19 +1,14 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Observer from '../observer/observer';
 
-const NextArrow = ({ slide, setSlide }) => {
+const NextArrow = ({ slide, setSlide, intersectionAirlines }) => {
   const [disabledNextArrow, setDisabledNextArrow] = useState(false);
-  const observer = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      setDisabledNextArrow(true);
-    } else {
-      setDisabledNextArrow(false);
-    }
-  });
+  const intersectionObserver = new Observer({ type: 'intersection', setDisabledNextArrow });
   useEffect(() => {
     const airlines = document.querySelectorAll('.airline');
     const lastAirline = airlines[airlines.length - 1];
-    observer.observe(lastAirline);
+    intersectionObserver.observeIntersection(lastAirline);
   }, []);
   return (
     <svg
@@ -22,10 +17,18 @@ const NextArrow = ({ slide, setSlide }) => {
     min-[450px]:fill-white cursor-default` : `pointer-events-auto bg-transparent stroke-[#97bf0f] fill-[#97bf0f] 
     border-none min-[450px]:border min-[450px]:border-[#97bf0f] min-[450px]:bg-[#97bf0f] min-[450px]:stroke-white 
     min-[450px]:fill-white cursor-pointer`} max-[250px]:absolute right-0 top-[10%] 
-    max-[250px]:w-[48px] static my-[10%] w-auto min-[450px]:w-[70px] min-[450px]:rounded-full min-[450px]:rounded-r`}
+    max-[250px]:w-[48px] static my-[10%] w-auto min-[450px]:w-[100px] min-[450px]:rounded-full min-[450px]:rounded-r`}
       height="64px"
       viewBox="0 0 50 50"
-      onClick={() => setSlide(slide + 1)}
+      onClick={() => {
+        intersectionAirlines[0].target.classList.add('animate-fade-out');
+        intersectionAirlines.forEach((airline, i) => {
+          if (i > 0 && airline) airline.target.classList.add('animate-move-left');
+        });
+        setTimeout(() => {
+          setSlide(slide + 1);
+        }, '1000');
+      }}
     >
       <path
         className="min-[450px]:translate-x-[10%] translate-x-[50%] translate-y-[25%]"
@@ -40,5 +43,10 @@ const NextArrow = ({ slide, setSlide }) => {
 NextArrow.propTypes = {
   slide: PropTypes.number.isRequired,
   setSlide: PropTypes.func.isRequired,
+  intersectionAirlines: PropTypes.arrayOf(PropTypes.instanceOf(IntersectionObserverEntry)),
+};
+
+NextArrow.defaultProps = {
+  intersectionAirlines: PropTypes.arrayOf(null),
 };
 export default NextArrow;

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { FaFacebookF, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
+import Observer from './observer/observer';
 import Navbar from '../navbar/navbar';
 import PreviousArrow from './previousArrow/previousArrow';
 import NextArrow from './nextArrow/nextArrow';
 import AirlinesContainer from './airlinesContainer/airlinesContainer';
 
 const HomePage = () => {
+  const [intersectionAirlines, setIntersectionAirlines] = useState(new Array(4).fill(null));
   const [slide, setSlide] = useState(0);
   const staticAirlineList = [
     {
@@ -114,22 +116,12 @@ const HomePage = () => {
     },
   ];
   const { length } = staticAirlineList;
-  const resizeObserver = new ResizeObserver((entries) => {
-    const entry = entries[0];
-    if (entry.contentRect.width >= 1536) {
-      return slide > length - 4 ? setSlide(length - 4) : setSlide(slide);
-    }
-    if (entry.contentRect.width >= 1024) {
-      return slide > length - 3 ? setSlide(length - 3) : setSlide(slide);
-    }
-    if (entry.contentRect.width >= 900) {
-      return slide > length - 2 ? setSlide(length - 2) : setSlide(slide);
-    }
-    return slide > length - 1 ? setSlide(length - 1) : setSlide(slide);
+  const resizeObserver = new Observer({
+    type: 'resize', slide, setSlide, listLength: length,
   });
   useEffect(() => {
     const pageContainer = document.querySelector('#page-container');
-    resizeObserver.observe(pageContainer);
+    resizeObserver.observeResizeElement(pageContainer);
   }, [slide]);
   return (
     <main id="page-container" className="flex max-h-screen h-screen max-w-[100vw]">
@@ -141,9 +133,24 @@ const HomePage = () => {
         </h1>
         <hr className="border-0 border-b-2 border-dotted w-28 mx-auto my-8 mb-10" />
         <div className="max-[250px]:relative static w-[100vw] sm:w-full mx-auto flex-auto gap-x-3 flex justify-center">
-          <PreviousArrow setSlide={setSlide} slide={slide} />
-          <AirlinesContainer staticAirlineList={staticAirlineList} slide={slide} length={length} />
-          <NextArrow setSlide={setSlide} slide={slide} />
+          <PreviousArrow
+            setSlide={setSlide}
+            slide={slide}
+            setIntersectionAirlines={setIntersectionAirlines}
+            intersectionAirlines={intersectionAirlines}
+          />
+          <AirlinesContainer
+            staticAirlineList={staticAirlineList}
+            slide={slide}
+            length={length}
+            setIntersectionAirlines={setIntersectionAirlines}
+          />
+          <NextArrow
+            setSlide={setSlide}
+            slide={slide}
+            setIntersectionAirlines={setIntersectionAirlines}
+            intersectionAirlines={intersectionAirlines}
+          />
         </div>
       </section>
     </main>

@@ -1,16 +1,28 @@
 import PropTypes from 'prop-types';
 
-const PreviousArrow = ({ slide, setSlide }) => (
+const PreviousArrow = ({ slide, setSlide, intersectionAirlines }) => (
   <svg
     className={`${slide === 0 ? `pointer-events-none bg-transparent stroke-[#efefef] fill-[#efefef] border-none 
     min-[450px]:border min-[450px]:border-[#efefef] min-[450px]:bg-[#efefef] min-[450px]:stroke-white 
     min-[450px]:fill-white cursor-default` : `pointer-events-auto bg-transparent stroke-[#97bf0f] fill-[#97bf0f] 
     border-none min-[450px]:border min-[450px]:border-[#97bf0f] min-[450px]:bg-[#97bf0f] min-[450px]:stroke-white 
     min-[450px]:fill-white cursor-pointer`} max-[250px]:absolute left-0 top-[10%] max-[250px]:w-[48px] static 
-    my-[10%] w-auto min-[450px]:w-[70px] min-[450px]:rounded-full min-[450px]:rounded-l`}
+    my-[10%] w-auto min-[450px]:w-[100px] min-[450px]:rounded-full min-[450px]:rounded-l`}
     height="64px"
     viewBox="0 0 50 50"
-    onClick={() => setSlide(slide - 1)}
+    onClick={() => {
+      const appeardAirlines = intersectionAirlines
+        .filter((airline) => (airline === null) === false);
+      const { length } = appeardAirlines;
+      appeardAirlines[length - 1].target.classList.add('animate-fade-out');
+      appeardAirlines.forEach((airline, i) => {
+        if (i === length - 1) return;
+        airline.target.classList.add('animate-move-right');
+      });
+      setTimeout(() => {
+        setSlide(slide - 1);
+      }, '1000');
+    }}
   >
     <path
       className="min-[450px]:translate-x-[50%] translate-x-0 translate-y-[25%]"
@@ -25,5 +37,10 @@ const PreviousArrow = ({ slide, setSlide }) => (
 PreviousArrow.propTypes = {
   slide: PropTypes.number.isRequired,
   setSlide: PropTypes.func.isRequired,
+  intersectionAirlines: PropTypes.arrayOf(PropTypes.instanceOf(IntersectionObserverEntry)),
+};
+
+PreviousArrow.defaultProps = {
+  intersectionAirlines: PropTypes.arrayOf(null),
 };
 export default PreviousArrow;
