@@ -8,14 +8,18 @@ const AirlinesContainer = ({
   return (
     staticAirlineList.slice(slide, length).map((airline, index) => (
       <Airline
+        key={airline.id}
+        id={airline.id}
         slide={slide}
         index={index}
         setIntersectionAirlines={setIntersectionAirlines}
-        display={index <= 3 ? displayArr[index] : 'hidden'}
-        key={airline.name}
         name={airline.name}
         description={airline.description}
+        display={index <= 3 ? displayArr[index] : 'hidden'}
         imgSrc={airline.imgSrc}
+        fee={airline.fee}
+        optionToPurchase={airline.optionToPurchase}
+        totalAmountPayable={airline.totalAmountPayable}
         socialMedia={airline.socialMedia}
       />
     ))

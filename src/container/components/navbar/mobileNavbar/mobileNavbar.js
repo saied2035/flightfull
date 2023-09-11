@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import logo from '../flightful-logo.png';
 
 const MobileNavbar = ({ routesArr, socialMediaArr }) => {
+  const { pathname } = useLocation();
   const [showList, setShowList] = useState(false);
   useEffect(() => {
     const handleWindowSize = (e) => {
@@ -50,7 +51,7 @@ const MobileNavbar = ({ routesArr, socialMediaArr }) => {
           routesArr.map((route) => (
             <li key={route.path} className="font-['Repo'] w-full">
               <NavLink
-                className="block w-full p-2 px-3"
+                className={`${route.path === '/' && pathname.includes('airlines') ? 'active' : ''} block w-full p-2 px-3`}
                 to={route.path}
                 onClick={() => setShowList(false)}
               >
