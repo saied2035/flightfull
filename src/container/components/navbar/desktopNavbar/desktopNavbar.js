@@ -5,7 +5,7 @@ import logo from '../flightful-logo.png';
 const DesktopNavbar = ({ routesArr, socialMediaArr }) => {
   const { pathname } = useLocation();
   return (
-    <nav className="min-[900px]:flex hidden relative flex-col gap-y-12 min-[900px]:gap-y-24 w-96 h-screen border-r-2 border-r-[#f8f8f8] bg-white">
+    <nav className="min-[900px]:flex hidden relative flex-col gap-y-12 min-[900px]:gap-y-12 w-[17%] h-screen border-r-2 border-r-[#f8f8f8] bg-white">
       <img
         className=" w-full transition-all duration-[650ms] ease-linear"
         src={logo}

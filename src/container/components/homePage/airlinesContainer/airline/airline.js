@@ -32,13 +32,15 @@ const Airline = ({
         to={`/airlines/${id}`}
         state={{
           airline: {
+            name,
+            imgSrc,
             fee,
             optionToPurchase,
             totalAmountPayable,
           },
         }}
       >
-        <img className="mx-auto w-40 sm:w-auto sm:max-w-[90%] object-contain object-center h-auto sm:h-[50%]" alt="Airline Pic" src={imgSrc} />
+        <img className="mx-auto w-40 min-[900px]:w-auto min-[900px]:max-w-[90%] object-contain object-center h-auto min-[900px]:h-[50%]" alt="Airline Pic" src={imgSrc} />
         <h2 className="text-center font-['Repo'] font-bold mt-2">{name}</h2>
         <hr className="border-0 border-b-2 border-dotted w-28 mx-auto mt-4 mb-4" />
         <p className="text-[#a9abaa] text-center font-semibold pb-2 text-sm">{description}</p>
