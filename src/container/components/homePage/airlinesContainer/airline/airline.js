@@ -30,6 +30,7 @@ const Airline = ({
 
       <Link
         to={`/airlines/${id}`}
+        className="h-[85%]"
         state={{
           airline: {
             name,
