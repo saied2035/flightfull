@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 const Airline = ({
-  name, description, socialMedia, imgSrc, display, setIntersectionAirlines, index, slide,
+  name, description, socialMedia, imgSrc, setIntersectionAirlines, index, slide, id, display, fee,
+  optionToPurchase, totalAmountPayable,
 }) => {
   const ref = useRef(null);
   const airlineObserver = new IntersectionObserver((entries) => {
@@ -20,11 +22,31 @@ const Airline = ({
     };
   }, [slide]);
   return (
-    <div ref={ref} className={`airline ${display} flex-col h-[24rem] overflow-hidden w-[80%] min-[900px]:w-[40%] lg:w-[30%] flex-auto`}>
-      <img className="mx-auto w-40 sm:w-auto sm:max-w-[90%] object-contain object-center h-auto sm:h-[50%]" alt="Airline Pic" src={imgSrc} />
-      <h2 className="text-center font-['Repo'] font-bold mt-2">{name}</h2>
-      <hr className="border-0 border-b-2 border-dotted w-28 mx-auto mt-4 mb-4" />
-      <p className="text-[#a9abaa] text-center font-semibold pb-2 text-sm">{description}</p>
+    <div
+      ref={ref}
+      className={`airline ${display} flex-col h-[24rem] overflow-hidden w-[80%] min-[900px]:w-[40%] 
+    lg:w-[30%] flex-auto`}
+    >
+
+      <Link
+        to={`/airlines/${id}`}
+        className="h-[85%]"
+        state={{
+          slide,
+          airline: {
+            name,
+            imgSrc,
+            fee,
+            optionToPurchase,
+            totalAmountPayable,
+          },
+        }}
+      >
+        <img className="mx-auto w-40 min-[900px]:w-auto min-[900px]:max-w-[90%] object-contain object-center h-auto min-[900px]:h-[50%]" alt="Airline Pic" src={imgSrc} />
+        <h2 className="text-center font-['Repo'] font-bold mt-2">{name}</h2>
+        <hr className="border-0 border-b-2 border-dotted w-28 mx-auto mt-4 mb-4" />
+        <p className="text-[#a9abaa] text-center font-semibold pb-2 text-sm">{description}</p>
+      </Link>
       <ul className="flex gap-x-3 justify-center">
         {
 socialMedia.map((link) => (
@@ -41,13 +63,17 @@ socialMedia.map((link) => (
 };
 
 Airline.propTypes = {
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  fee: PropTypes.number.isRequired,
+  optionToPurchase: PropTypes.number.isRequired,
+  totalAmountPayable: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   slide: PropTypes.number.isRequired,
+  display: PropTypes.string.isRequired,
   setIntersectionAirlines: PropTypes.func.isRequired,
   imgSrc: PropTypes.string.isRequired,
-  display: PropTypes.string.isRequired,
   socialMedia: PropTypes.arrayOf(PropTypes.shape({
     url: PropTypes.string.isRequired,
     image: PropTypes.func.isRequired,
