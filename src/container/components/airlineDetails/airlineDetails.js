@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { BiChevronRightCircle } from 'react-icons/bi';
 
 const AirlineDetails = () => {
@@ -52,20 +52,22 @@ const AirlineDetails = () => {
           <BiChevronRightCircle size={20} className="self-center fill-white ml-3 mt-[2px]" />
         </button>
       </aside>
-      <svg
-        className="absolute bottom-5 left-0 pointer-events-auto border border-[#97bf0f] bg-[#97bf0f] stroke-white
+      <Link to="/airlines">
+        <svg
+          className="absolute bottom-5 left-0 pointer-events-auto border border-[#97bf0f] bg-[#97bf0f] stroke-white
         fill-white cursor-pointer rounded-full rounded-l w-[60px] sm:w-[75px]"
-        height="50"
-        viewBox="0 0 50 50"
-      >
-        <path
-          className="translate-x-[50%] translate-y-[25%]"
-          d="M12.9268 18.8389C13.7351 19.5461 15 18.9721 15
+          height="50"
+          viewBox="0 0 50 50"
+        >
+          <path
+            className="translate-x-[50%] translate-y-[25%]"
+            d="M12.9268 18.8389C13.7351 19.5461 15 18.9721 15
       17.8982L15 6.10192C15 5.02797 13.7351 4.454 12.9268 5.1612L6.61617 10.683C5.81935 11.3802 5.81935 12.6198
       6.61617 13.317L12.9268 18.8389ZM13.5 17.3472L7.60393 12.1882C7.4901 12.0886 7.4901 11.9115 7.60393 11.8119L13.5
       6.65286L13.5 17.3472Z"
-        />
-      </svg>
+          />
+        </svg>
+      </Link>
     </section>
   );
 };
