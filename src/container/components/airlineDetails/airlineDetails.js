@@ -2,7 +2,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { BiChevronRightCircle } from 'react-icons/bi';
 
 const AirlineDetails = () => {
-  const { airline } = useLocation().state;
+  const { airline, airlineId } = useLocation().state;
   const {
     name, imgSrc, fee, optionToPurchase, totalAmountPayable,
   } = airline;
@@ -46,11 +46,11 @@ const AirlineDetails = () => {
             </p>
           </li>
         </ul>
-        <button type="button" className="flex  mt-5 sm:mt-auto ml-auto font-medium text-white bg-[#97bf0e] px-3 py-2 rounded-full">
+        <Link to="/reservations/new" state={{ airlineId }} className="flex mt-5 sm:mt-auto ml-auto font-medium text-white bg-[#97bf0e] px-3 py-2 rounded-full">
           Reserve
           {' '}
           <BiChevronRightCircle size={20} className="self-center fill-white ml-3 mt-[2px]" />
-        </button>
+        </Link>
       </aside>
       <Link to="/airlines">
         <svg
