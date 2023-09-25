@@ -26,7 +26,9 @@ const ReserveAirline = () => {
   tomorrow.setDate(tomorrow.getDate() + 1);
   const allowedDate = tomorrow.toISOString().split('T')[0];
   return (
-    <section className="max-w-full font-['Repo'] relative flex-auto flex flex-col items-center justify-center bg-[#96bf01]">
+    <section className="max-w-full font-['Repo'] relative flex-auto flex flex-col items-center justify-center
+    bg-[#96bf01]"
+    >
       <img
         src={airplane}
         alt="airplane"
@@ -80,8 +82,8 @@ const ReserveAirline = () => {
           name="airlineId"
           className="cursor-pointer focus:cursor-default
         bg-[url('./container/components/reserveAirline/down-arrow.png')] bg-[center_right_2px] bg-no-repeat
-        appearance-none outline-0 p-3 rounded-2xl bg-transparent text-white border border-white disabled:bg-none
-        disabled:cursor-default disabled:text-white"
+        appearance-none outline-0 p-3 rounded-2xl bg-transparent text-white border border-white
+        disabled:bg-none disabled:cursor-default disabled:text-white"
         >
           <option className="bg-none bg-[#96bf01]" value="" hidden>Select a flight</option>
           {
