@@ -54,6 +54,7 @@ const MobileNavbar = ({ routesArr, socialMediaArr }) => {
                 className={`${route.path === '/' && pathname.includes('airlines') ? 'active' : ''} block w-full p-2 px-3`}
                 to={route.path}
                 onClick={() => setShowList(false)}
+                end
               >
                 {route.name}
               </NavLink>

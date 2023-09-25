@@ -4,6 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  transform: translateX(8px);
+}
+
+
 .active {
   background-color: #97bf0f;
   color: #fff;

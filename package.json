@@ -33,7 +33,7 @@
     "tailwindcss": "^3.3.2"
   },
   "scripts": {
-    "start": "WATCHPACK_POLLING=true react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
