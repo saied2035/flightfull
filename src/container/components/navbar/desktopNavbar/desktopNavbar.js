@@ -18,6 +18,7 @@ const DesktopNavbar = ({ routesArr, socialMediaArr }) => {
               <NavLink
                 className={`${route.path === '/' && pathname.includes('airlines') ? 'active' : ''} block w-full p-2 px-3`}
                 to={route.path}
+                end
               >
                 {route.name}
               </NavLink>

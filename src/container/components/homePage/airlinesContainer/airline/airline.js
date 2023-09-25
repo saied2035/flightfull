@@ -32,7 +32,7 @@ const Airline = ({
         to={`/airlines/${id}`}
         className="h-[85%]"
         state={{
-          slide,
+          airlineId: id,
           airline: {
             name,
             imgSrc,
