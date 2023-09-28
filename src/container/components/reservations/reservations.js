@@ -20,13 +20,31 @@ const Reservations = () => {
       {
       staticReservations.map((resrvation) => (
         <li key={resrvation.id} className="font-['Repo'] flex w-[95%] h-[20%] mx-auto items-center">
-          <img className="w-[20%] h-full text-center object-contain object-center border border-t-0 p-2" src={resrvation.airline} alt="Airline pic" />
-          <p className="w-[20%] h-full border border-l-0 border-t-0 flex items-center justify-center align-baseline">{resrvation.city}</p>
-          <p className="w-[20%] h-full text-center border border-l-0 border-t-0 flex items-center justify-center align-baseline">{resrvation.date}</p>
-          <p className="w-[20%] h-full text-center border border-l-0 border-t-0 flex items-center justify-center align-baseline">
+          <img
+            className="w-[20%] h-full text-center object-contain object-center border border-t-0 p-2"
+            src={resrvation.airline}
+            alt="Airline pic"
+          />
+
+          <p className="w-[20%] h-full border border-l-0 border-t-0 flex items-center justify-center
+          align-baseline"
+          >
+            {resrvation.city}
+          </p>
+
+          <p className="w-[20%] h-full text-center border border-l-0 border-t-0 flex items-center
+          justify-center align-baseline"
+          >
+            {resrvation.date}
+          </p>
+
+          <p className="w-[20%] h-full text-center border border-l-0 border-t-0 flex items-center
+          justify-center align-baseline"
+          >
             $
             {resrvation.price}
           </p>
+
           <div className="w-[20%] h-full flex items-center justify-center border-r border-b">
             <button
               type="button"
