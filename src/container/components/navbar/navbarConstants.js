@@ -1,6 +1,6 @@
 export const routesArr = [{ path: '/', name: 'Home' }, { path: '/reservations/new', name: 'Reserve' },
-  { path: '/reservations', name: 'Reservations' }, { path: '/flights/new', name: 'Add flight' },
-  { path: '/flights', name: 'Flights' }];
+  { path: '/reservations', name: 'Reservations' }, { path: '/airlines/new', name: 'Add airline' },
+  { path: '/profile', name: 'Profile' }];
 
 export const socialMediaArr = [{
   image: 'https://img.icons8.com/small/20/000000/twitter.png',

@@ -5,6 +5,7 @@ import logo from '../flightful-logo.png';
 
 const MobileNavbar = ({ routesArr, socialMediaArr }) => {
   const { pathname } = useLocation();
+  const isActive = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$)/.test(pathname);
   const [showList, setShowList] = useState(false);
   useEffect(() => {
     const handleWindowSize = (e) => {
@@ -51,7 +52,7 @@ const MobileNavbar = ({ routesArr, socialMediaArr }) => {
           routesArr.map((route) => (
             <li key={route.path} className="font-['Repo'] w-full">
               <NavLink
-                className={`${route.path === '/' && pathname.includes('airlines') ? 'active' : ''} block w-full p-2 px-3`}
+                className={`${route.path === '/' && isActive ? 'active' : ''} block w-full p-2 px-3`}
                 to={route.path}
                 onClick={() => setShowList(false)}
                 end
