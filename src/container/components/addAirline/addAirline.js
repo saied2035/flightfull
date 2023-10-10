@@ -20,7 +20,7 @@ const AddAirline = () => {
     <section className="relative font-['Repo'] flex-auto flex flex-col items-center bg-[#96bf01] gap-y-3">
       <h2 className="text-2xl text-center mt-5 text-white">Add Airline</h2>
       <hr className="w-56 text-white bg-white" />
-      <form className="gap-y-3 w-full flex flex-col items-center justify-center">
+      <form className="flex-auto gap-y-5 w-full flex flex-col justify-center items-center">
         <Outlet />
       </form>
       {steps.nextStep < 5 && (

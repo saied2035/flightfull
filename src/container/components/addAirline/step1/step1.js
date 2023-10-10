@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { SlClose } from 'react-icons/sl';
 
 const Step1 = () => {
+  const [chars, setChars] = useState(0);
+  const [textareaValue, setTextareaValue] = useState('');
   const [imageName, setImageName] = useState('Select image');
   const [image, setImage] = useState('');
   console.log({ image });
@@ -26,6 +28,7 @@ const Step1 = () => {
       />
       <fieldset className="flex justify-center items-center gap-3">
         <input
+          id="select-image-url"
           className="relative p-2 bg-transparent text-white border border-white rounded-2xl
             placeholder:text-white placeholder:text-sm focus:placeholder:text-transparent focus:outline-0"
           type="url"
@@ -35,7 +38,9 @@ const Step1 = () => {
             clearTimeout(timer);
             timer = setTimeout(() => {
               imageToBase64(e.target.value, '');
-            }, 1000);
+              setImageName('Select image');
+              document.querySelector('#select-image').value = null;
+            }, 1500);
           }}
         />
         <span className="text-xl text-white">or</span>
@@ -56,12 +61,13 @@ const Step1 = () => {
           onClick={() => {
             setImageName('Select image');
             setImage('');
+            document.querySelector('#select-image-url').value = null;
             document.querySelector('#select-image').click();
           }}
         >
           <SlClose
             size={18}
-            className="absolute top-1 right-1"
+            className={`absolute top-1 right-1 ${imageName === 'Select image' ? 'pointer-events-none' : 'pointer-events-auto'}`}
             onClick={(e) => {
               setImageName('Select image');
               setImage('');
@@ -72,7 +78,28 @@ const Step1 = () => {
           {imageName}
         </button>
       </fieldset>
-      { image && <img src={image} alt="preview" /> }
+      <fieldset className="flex-auto relative md:w-[40%] w-full my-2">
+        <textarea
+          className="md:w-full md:h-[80%] h-full bg-transparent border focus:placeholder:text-transparent
+          focus:outline-0 placeholder:text-white placeholder:text-sm border-white rounded-2xl
+          text-white p-2 resize-none tracking-widest"
+          maxLength={150}
+          value={textareaValue}
+          onChange={(e) => {
+            if (/(\s\s|^\s$)/.test(e.target.value)) {
+              return;
+            }
+            if (/^[^]{149}\s$/.test(e.target.value)) {
+              setTextareaValue(e.target.value.trim());
+            } else {
+              setTextareaValue(e.target.value);
+            }
+            setChars(e.target.value.length);
+          }}
+          placeholder="Write the description here..."
+        />
+        <span className="absolute bottom-[12%] right-0 text-white">{`${chars}/150`}</span>
+      </fieldset>
     </>
   );
 };
