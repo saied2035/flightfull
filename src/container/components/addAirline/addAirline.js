@@ -17,10 +17,10 @@ const AddAirline = () => {
     }
   }, []);
   return (
-    <section className="relative font-['Repo'] flex-auto flex flex-col items-center bg-[#96bf01] gap-y-3">
-      <h2 className="text-2xl text-center mt-5 text-white">Add Airline</h2>
-      <hr className="w-56 text-white bg-white" />
-      <form className="flex-auto gap-y-5 w-full flex flex-col justify-center items-center">
+    <section className="max-w-full relative font-['Repo'] flex-auto flex flex-col items-center bg-[#96bf01] gap-y-3">
+      <h2 className="text-2xl 2xl:text-3xl text-center mt-5 text-white">Add Airline</h2>
+      <hr className="sm:w-56 w-44 text-white bg-white" />
+      <form className="max-w-full flex-auto gap-y-5 w-full flex flex-col justify-center items-center">
         <Outlet />
       </form>
       {steps.nextStep < 5 && (
@@ -31,7 +31,7 @@ const AddAirline = () => {
           currentStep: steps.currentStep + 1,
           nextStep: steps.nextStep + 1,
         })}
-        className={`${steps.currentStep === 4 ? 'pointer-events-none' : 'pointer-events-auto'} flex mt-5 font-medium text-[#97bf0e] bg-white px-3 py-2 rounded-full absolute bottom-4 right-4`}
+        className={`${steps.currentStep === 4 ? 'pointer-events-none' : 'pointer-events-auto'} flex mt-5 font-medium text-[#97bf0e] bg-white px-3 py-2 rounded-full absolute sm:bottom-4 sm:right-4 bottom-0 right-[-0.5rem] sm:scale-100 2xl:scale-125 scale-75`}
       >
         Next
         {' '}
@@ -46,7 +46,7 @@ const AddAirline = () => {
           currentStep: steps.currentStep - 1,
           nextStep: steps.nextStep - 1,
         })}
-        className={`${steps.currentStep === 1 ? 'pointer-events-none' : 'pointer-events-auto'} flex mt-5 font-medium text-[#97bf0e] bg-white px-3 py-2 rounded-full absolute bottom-4 left-4`}
+        className={`${steps.currentStep === 1 ? 'pointer-events-none' : 'pointer-events-auto'} flex mt-5 font-medium text-[#97bf0e] bg-white px-3 py-2 rounded-full absolute sm:bottom-4 sm:left-4 bottom-0 left-[-0.5rem] sm:scale-100 2xl:scale-125 scale-75`}
       >
         <BiChevronRightCircle size={20} className="self-center fill-[#97bf0e] mr-3 mt-[2px] rotate-[180deg]" />
         Back
