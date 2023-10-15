@@ -4,6 +4,8 @@ import logo from '../flightful-logo.png';
 
 const DesktopNavbar = ({ routesArr, socialMediaArr }) => {
   const { pathname } = useLocation();
+  const isActive = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$)/.test(pathname);
+  const isAddNewAirlineAcitive = /airlines\/new/.test(pathname);
   return (
     <nav className="min-[900px]:flex hidden relative flex-col gap-y-12 min-[900px]:gap-y-12 w-[17%] h-screen border-r-2 border-r-[#f8f8f8] bg-white">
       <img
@@ -16,7 +18,7 @@ const DesktopNavbar = ({ routesArr, socialMediaArr }) => {
           routesArr.map((route) => (
             <li key={route.path} className="font-['Repo'] w-full">
               <NavLink
-                className={`${route.path === '/' && pathname.includes('airlines') ? 'active' : ''} block w-full p-2 px-3`}
+                className={`${(route.path === '/' && isActive) || (route.path === '/airlines/new' && isAddNewAirlineAcitive) ? 'active' : ''} block w-full p-2 px-3`}
                 to={route.path}
                 end
               >

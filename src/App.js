@@ -6,15 +6,17 @@ import HomePage from './container/components/homePage/homePage';
 import AirlineDetails from './container/components/airlineDetails/airlineDetails';
 import ReserveAirline from './container/components/reserveAirline/reserveAirline';
 import Reservations from './container/components/reservations/reservations';
+import AddAirline from './container/components/addAirline/addAirline';
 
 const App = () => (
   <Routes>
     <Route path="/" element={<Container />}>
       <Route path="/" element={<HomePage />} />
+      <Route path="/airlines/new" element={<AddAirline />} />
       <Route path="/airlines" element={<HomePage />} />
       <Route path="/airlines/:id" element={<AirlineDetails />} />
-      <Route exact path="/reservations/new" element={<ReserveAirline />} />
-      <Route exact path="/reservations" element={<Reservations />} />
+      <Route path="/reservations/new" element={<ReserveAirline />} />
+      <Route path="/reservations" element={<Reservations />} />
     </Route>
     <Route path="/signup" element={<Signup />} />
     <Route path="/login" element={<Login />} />
