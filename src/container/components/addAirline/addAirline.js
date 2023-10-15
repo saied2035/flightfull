@@ -18,7 +18,7 @@ const AddAirline = () => {
   });
   return (
     <section className="max-w-full relative font-['Repo'] flex-auto flex flex-col items-center
-    bg-[#96bf01] gap-y-3"
+    bg-[#96bf01]"
     >
       <h2 className="text-2xl 2xl:text-3xl text-center mt-5 text-white">Add Airline</h2>
       <hr className="sm:w-56 w-44 text-white bg-white" />

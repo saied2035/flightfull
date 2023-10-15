@@ -81,7 +81,7 @@ const Step1 = ({ step }) => {
           name="description"
           required={step === 1}
           onChange={(e) => {
-            if (/(\s\s|^\s$)/.test(e.target.value)) {
+            if (/(\s\s|^\s$|\n)/.test(e.target.value)) {
               return;
             }
             if (/^[^]{149}\s$/.test(e.target.value)) {
