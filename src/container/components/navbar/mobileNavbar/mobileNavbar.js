@@ -6,6 +6,7 @@ import logo from '../flightful-logo.png';
 const MobileNavbar = ({ routesArr, socialMediaArr }) => {
   const { pathname } = useLocation();
   const isActive = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$)/.test(pathname);
+  const isBlack = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$|^\/$|^\/reservations$)/.test(pathname);
   const isAddNewAirlineAcitive = /airlines\/new/.test(pathname);
   const [showList, setShowList] = useState(false);
   useEffect(() => {
@@ -24,7 +25,7 @@ const MobileNavbar = ({ routesArr, socialMediaArr }) => {
       pointer-events-none`}`}
     >
       <svg
-        className={`absolute top-0 left-0 w-[15%] fill-black pointer-events-auto transition-all duration-700 
+        className={`absolute top-0 left-0 w-[15%] ${isBlack ? 'fill-black' : 'fill-white'} pointer-events-auto transition-all duration-700 
         ${showList ? 'ml-[87%] mt-2 rotate-[360deg]' : 'ml-0 mt-0 rotate-0'}`}
         viewBox="0 0 32 32"
         onClick={() => setShowList(showList === false)}
