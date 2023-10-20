@@ -1,15 +1,28 @@
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import background from '../background.avif';
+import { isLoggedIn, login } from '../../../redux/authSlice/authSlice';
 
 const Login = () => {
-  const [form, setForm] = useState({ email: null, pass: null });
+  const [form, setForm] = useState({ email: null, password: null });
+  const [error, setError] = useState('');
+  const [render, setRender] = useState(false);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const authStatus = useSelector((state) => state.authReducer.status);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ form });
-    console.log('submit login');
+    dispatch(login({ form, navigate, setError }));
   };
+  useEffect(() => {
+    if (authStatus === 'idle') dispatch(isLoggedIn({ navigate, pathname, type: 'authPage' }));
+    if (authStatus === 401 || authStatus === 'Failed') setRender(true);
+  }, [authStatus]);
   return (
+    render && (
     <div className="justify-center h-screen bg-[#96bf01] flex flex-col items-center gap-y-3 sm:p-3 p-0">
       <img
         src={background}
@@ -24,6 +37,7 @@ const Login = () => {
       <form
         className="xl:w-[33vw] min-[900px]:w-[40vw] sm:w-[60vw] min-[300px]:w-[80vw] w-[95vw] flex flex-col py-3 sm:px-5 px-0 rounded max-w-full gap-y-3 z-50"
         onSubmit={(e) => handleSubmit(e)}
+        onChange={() => setError('')}
       >
         <input
           className="w-full p-2 sm:text-xl text-base bg-transparent text-white border border-white
@@ -43,7 +57,7 @@ const Login = () => {
           name="password"
           type="password"
           placeholder="Password"
-          onChange={(e) => setForm({ ...form, pass: e.target.value })}
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
         <button
           className="max-w-full font-bold mt-2 mx-auto w-32 text-xl bg-white text-[#96bf01] rounded p-1"
@@ -51,6 +65,7 @@ const Login = () => {
         >
           Log in
         </button>
+        {error && <p className="text-[#ff0000] font-semibold text-center max-[400px]:text-xs text-base">{error}</p>}
       </form>
       <p className="max-[400px]:text-sm xl:w-[33vw] min-[900px]:w-[40vw] sm:w-[60vw] min-[300px]:w-[80vw]
       w-[95vw] text-white font-bold text-base text-right flex flex-wrap min-[230px]:justify-end
@@ -66,6 +81,7 @@ const Login = () => {
         </NavLink>
       </p>
     </div>
+    )
   );
 };
 
