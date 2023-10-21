@@ -31,6 +31,19 @@ export const login = createAsyncThunk(
   },
 );
 
+export const signout = createAsyncThunk(
+  'authentication/signout', async (navigate) => {
+    const response = await authRequests.signout();
+    console.log({ response });
+    if (response.status === 200) {
+      navigate('/login');
+      return { status: 401, error: '' };
+    }
+
+    return { error: response.error, status: 400 };
+  },
+);
+
 export const isLoggedIn = createAsyncThunk(
   'authentication/isLoggedIn', async (body) => {
     const { navigate, pathname, type } = body;
@@ -93,6 +106,25 @@ const authSlice = createSlice({
       modifier.error = action.error.message;
       modifier.status = 'Failed';
     });
+
+    // signout
+    builder.addCase(signout.pending, (state) => {
+      const modifier = state;
+      modifier.status = 'Pending';
+    });
+
+    builder.addCase(signout.fulfilled, (state, action) => {
+      const modifier = state;
+      modifier.status = action.payload.status;
+      modifier.error = action.payload.error;
+    });
+
+    builder.addCase(signout.rejected, (state, action) => {
+      const modifier = state;
+      modifier.error = action.error.message;
+      modifier.status = 'Failed';
+    });
+
     // is user logged in ?
     builder.addCase(isLoggedIn.pending, (state) => {
       const modifier = state;

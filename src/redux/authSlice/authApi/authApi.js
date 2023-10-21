@@ -18,10 +18,15 @@ const login = (body) => fetch(`${url}/auth/login`, { ...options, body: JSON.stri
   .then((data) => data.json())
   .catch(() => ({ error: 'Server is down.' }));
 
+const signout = () => fetch(`${url}/auth/signout`, { ...options, method: 'DELETE' })
+  .catch(() => ({ error: 'Server is down.' }));
+
 const isLoggedIn = () => fetch(`${url}/auth/login_check`, options)
   .then((data) => data.json())
   .catch(() => ({ status: 401 }));
 
-const authRequests = { signup, login, isLoggedIn };
+const authRequests = {
+  signup, login, signout, isLoggedIn,
+};
 
 export default authRequests;
