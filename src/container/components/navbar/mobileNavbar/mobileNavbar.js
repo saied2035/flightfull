@@ -5,8 +5,9 @@ import logo from '../flightful-logo.png';
 
 const MobileNavbar = ({ routesArr, socialMediaArr }) => {
   const { pathname } = useLocation();
-  const isActive = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$)/.test(pathname);
-  const isBlack = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$|^\/$|^\/reservations$)/.test(pathname);
+  const isActive = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$|^\/your_airlines\/$|^\/your_airlines$)/
+    .test(pathname);
+  const isBlack = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$|^\/$|^\/reservations$|^\/your_airlines\/$|^\/your_airlines$)/.test(pathname);
   const isAddNewAirlineAcitive = /airlines\/new/.test(pathname);
   const [showList, setShowList] = useState(false);
   useEffect(() => {
