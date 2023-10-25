@@ -12,7 +12,7 @@ export const signup = createAsyncThunk(
     if (response.errors || response.error) {
       setError(response.error || response.errors);
     }
-    return response.errors || response.error || response.status;
+    return response.errors || response.error || response;
   },
 );
 
@@ -27,7 +27,7 @@ export const login = createAsyncThunk(
     if (response.errors || response.error) {
       setError(response.error || response.errors);
     }
-    return response.errors || response.error || response.status;
+    return response.errors || response.error || response;
   },
 );
 
@@ -37,7 +37,7 @@ export const signout = createAsyncThunk(
     console.log({ response });
     if (response.status === 200) {
       navigate('/login');
-      return { status: 401, error: '' };
+      return { status: 401, error: '', user_id: null };
     }
 
     return { error: response.error, status: 400 };
@@ -49,18 +49,18 @@ export const isLoggedIn = createAsyncThunk(
     const { navigate, pathname, type } = body;
     const response = await authRequests.isLoggedIn();
     console.log({ response });
-    if (response.status && response.status === 401) {
+    if (response.status && (response.status === 401 || response.status === 404)) {
       navigate(/^\/(login|signup)$/.test(pathname) ? pathname : '/login');
     } else {
       navigate(type === 'normalPage' ? pathname : '/');
     }
-    return response.error || response.status;
+    return response.error || response;
   },
 );
 
 const authSlice = createSlice({
   name: 'authentication',
-  initialState: { status: 'idle', error: '' },
+  initialState: { status: 'idle', error: '', user_id: null },
   extraReducers: (builder) => {
     // signup
     builder.addCase(signup.pending, (state) => {
@@ -70,8 +70,9 @@ const authSlice = createSlice({
 
     builder.addCase(signup.fulfilled, (state, action) => {
       const modifier = state;
-      if (typeof action.payload === 'number') {
-        modifier.status = action.payload;
+      if (typeof action.payload.status === 'number') {
+        modifier.status = action.payload.status;
+        modifier.user_id = action.payload.user_id;
         modifier.error = '';
       } else {
         modifier.error = action.payload;
@@ -92,8 +93,9 @@ const authSlice = createSlice({
 
     builder.addCase(login.fulfilled, (state, action) => {
       const modifier = state;
-      if (typeof action.payload === 'number') {
-        modifier.status = action.payload;
+      if (typeof action.payload.status === 'number') {
+        modifier.status = action.payload.status;
+        modifier.user_id = action.payload.user_id;
         modifier.error = '';
       } else {
         modifier.error = action.payload;
@@ -116,6 +118,7 @@ const authSlice = createSlice({
     builder.addCase(signout.fulfilled, (state, action) => {
       const modifier = state;
       modifier.status = action.payload.status;
+      modifier.user_id = action.payload.user_id;
       modifier.error = action.payload.error;
     });
 
@@ -133,11 +136,13 @@ const authSlice = createSlice({
 
     builder.addCase(isLoggedIn.fulfilled, (state, action) => {
       const modifier = state;
-      if (typeof action.payload === 'number') {
-        modifier.status = action.payload;
+      if (typeof action.payload.status === 'number' && action.payload.status === 200) {
+        modifier.status = action.payload.status;
+        modifier.user_id = action.payload.user_id;
         modifier.error = '';
       } else {
         modifier.error = action.payload;
+        modifier.user_id = null;
         modifier.status = 'Failed';
       }
     });
@@ -145,6 +150,7 @@ const authSlice = createSlice({
     builder.addCase(isLoggedIn.rejected, (state, action) => {
       const modifier = state;
       modifier.error = action.error.message;
+      modifier.user_id = null;
       modifier.status = 'Failed';
     });
   },
