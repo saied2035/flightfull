@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 const Airline = ({
-  name, description, socialMedia, imgSrc, setIntersectionAirlines, index, slide, id, display, fee,
-  optionToPurchase, totalAmountPayable,
+  name, description, socialMedia, imgSrc, setIntersectionAirlines, index,
+  slide, id, ownerId, display, fee, optionToPurchase, totalAmountPayable,
 }) => {
+  const userId = useSelector((state) => state.authReducer.user_id);
   const ref = useRef(null);
   const airlineObserver = new IntersectionObserver((entries) => {
     const { isIntersecting } = entries[0];
@@ -24,13 +26,12 @@ const Airline = ({
   return (
     <div
       ref={ref}
-      className={`airline ${display} flex-col h-[24rem] overflow-hidden w-[80%] min-[900px]:w-[40%] 
-    lg:w-[30%] flex-auto`}
+      className={`airline ${display} flex-col overflow-hidden w-[80%] min-[900px]:w-[40%] 
+    min-[1140px]:w-[30%] flex-auto`}
     >
-
       <Link
         to={`/airlines/${id}`}
-        className="h-[85%]"
+        className="min-[900px]:h-[70%] h-auto"
         state={{
           airlineId: id,
           airline: {
@@ -42,11 +43,17 @@ const Airline = ({
           },
         }}
       >
-        <img className="mx-auto w-40 min-[900px]:w-auto min-[900px]:max-w-[90%] object-contain object-center h-auto min-[900px]:h-[50%]" alt="Airline Pic" src={imgSrc} />
+        <img className="mx-auto w-40 min-[900px]:w-auto min-[900px]:max-w-[90%] object-contain object-center h-auto min-[900px]:h-[40%]" alt="Airline Pic" src={imgSrc} />
         <h2 className="text-center font-['Repo'] font-bold mt-2">{name}</h2>
         <hr className="border-0 border-b-2 border-dotted w-28 mx-auto mt-4 mb-4" />
-        <p className="text-[#a9abaa] text-center font-semibold pb-2 text-sm">{description}</p>
+        <p className="text-[#a9abaa] text-center font-semibold text-sm">{description}</p>
       </Link>
+      {userId === ownerId && (
+      <aside className="flex flex-wrap gap-4 my-2 w-full items-center sm:text-base text-sm">
+        <span className="text-center mx-auto">Created by you</span>
+        <button type="button" className=" text-white bg-[#97bf0e] px-3 py-2 rounded-full mx-auto">Delete</button>
+      </aside>
+      )}
       <ul className="flex gap-x-3 justify-center">
         {
 socialMedia.map((link) => (
@@ -74,6 +81,7 @@ Airline.propTypes = {
   display: PropTypes.string.isRequired,
   setIntersectionAirlines: PropTypes.func.isRequired,
   imgSrc: PropTypes.string.isRequired,
+  ownerId: PropTypes.number,
   socialMedia: PropTypes.arrayOf(PropTypes.shape({
     url: PropTypes.string.isRequired,
     image: PropTypes.func.isRequired,
@@ -81,4 +89,7 @@ Airline.propTypes = {
   })).isRequired,
 };
 
+Airline.defaultProps = {
+  ownerId: undefined,
+};
 export default Airline;
