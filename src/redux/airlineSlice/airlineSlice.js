@@ -6,8 +6,23 @@ import airlinesRequests from './airlineApi/airlineApi';
 
 export const createAirline = createAsyncThunk(
   'airlines/createAirline', async (body) => {
-    const response = await airlinesRequests.createAirline(body);
+    const { form, navigate } = body;
+    const response = await airlinesRequests.createAirline(form);
     console.log({ response });
+    if (response.airlines) {
+      const newAirline = response.airlines[0];
+      const state = {
+        airlineId: newAirline.id,
+        airline: {
+          name: newAirline.name,
+          imgSrc: newAirline.img_src,
+          fee: newAirline.fee,
+          optionToPurchase: newAirline.option_to_purchase,
+          totalAmountPayable: newAirline.total_amount_payable,
+        },
+      };
+      navigate(`/airlines/${newAirline.id}`, { state });
+    }
     return response;
   },
 );

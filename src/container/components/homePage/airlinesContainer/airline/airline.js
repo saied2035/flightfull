@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ const Airline = ({
   name, description, socialMedia, imgSrc, setIntersectionAirlines, index,
   slide, id, ownerId, display, fee, optionToPurchase, totalAmountPayable,
 }) => {
+  const { pathname: PreviousPath } = useLocation();
   const userId = useSelector((state) => state.authReducer.user_id);
   const ref = useRef(null);
   const airlineObserver = new IntersectionObserver((entries) => {
@@ -33,6 +34,8 @@ const Airline = ({
         to={`/airlines/${id}`}
         className="min-[900px]:h-[70%] h-auto"
         state={{
+          PreviousPath,
+          startSlide: slide,
           airlineId: id,
           airline: {
             name,

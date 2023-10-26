@@ -15,15 +15,15 @@ class Observer {
     this.resizeObserver = new ResizeObserver((entries) => {
       const entry = entries[0];
       this.checkSlidesLength(entry);
-      if (entry.contentRect.width >= 1536 && this.listLength > 4) {
+      if (entry.contentRect.width >= 1536 && this.listLength >= 4) {
         return this.slide > this.listLength - 4 ? this.setSlide(this.listLength - 4)
           : this.setSlide(this.slide);
       }
-      if (entry.contentRect.width >= 1140 && this.listLength > 3) {
+      if (entry.contentRect.width >= 1140 && this.listLength >= 3) {
         return this.slide > this.listLength - 3 ? this.setSlide(this.listLength - 3)
           : this.setSlide(this.slide);
       }
-      if (entry.contentRect.width >= 900 && this.listLength > 2) {
+      if (entry.contentRect.width >= 900 && this.listLength >= 2) {
         return this.slide > this.listLength - 2 ? this.setSlide(this.listLength - 2)
           : this.setSlide(this.slide);
       }

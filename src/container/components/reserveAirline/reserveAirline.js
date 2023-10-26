@@ -1,17 +1,18 @@
 import { useLocation } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
-import staticAirlineList from '../staticAirlineList';
+import { useSelector } from 'react-redux';
 import airplane from '../airplane.png';
 import cities from './cities';
 
 const ReserveAirline = () => {
+  const airlines = useSelector((state) => state.airlineReducer.airlines);
   const location = useLocation();
   const [airlineId, setAirlineId] = useState(location.state ? location.state.airlineId : undefined);
   const ref = useRef(null);
   const [form, setForm] = useState({ airlineId: null, city: null, date: null });
   useEffect(() => {
     setForm({ ...form, airlineId });
-    return () => window.history.replaceState({}, document.title);
+    window.history.replaceState({}, document.title);
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,7 +88,7 @@ const ReserveAirline = () => {
         >
           <option className="bg-none bg-[#96bf01]" value="" hidden>Select a flight</option>
           {
-        staticAirlineList.map((airline) => (
+        airlines.map((airline) => (
           <option className="bg-none bg-[#96bf01]" key={airline.id} value={airline.id}>
             {
              airlineId ? `${airline.name} - selected` : `${airline.name}`

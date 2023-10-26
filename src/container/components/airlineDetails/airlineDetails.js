@@ -1,11 +1,23 @@
 import { useLocation, Link } from 'react-router-dom';
 import { BiChevronRightCircle } from 'react-icons/bi';
+import { useSelector } from 'react-redux';
 
 const AirlineDetails = () => {
-  const { airline, airlineId } = useLocation().state;
-  const {
-    name, imgSrc, fee, optionToPurchase, totalAmountPayable,
-  } = airline;
+  const airlines = useSelector((state) => state.airlineReducer.airlines);
+  const location = useLocation();
+  const { pathname } = location;
+  const PreviousPath = location.state ? location.state.PreviousPath : '/airlines';
+  const startSlide = location.state ? location.state.startSlide : 0;
+  const filteredAirline = airlines.filter((airline) => airline.id
+  === Number(pathname.replace(/[^0-9]/g, '')));
+  const airlineId = location.state ? location.state.airlineId : filteredAirline[0].id;
+  const airline = location.state ? location.state.airline : filteredAirline[0];
+  const { name, fee } = airline;
+  const imgSrc = airline.img_src ? airline.img_src : airline.imgSrc;
+  const optionToPurchase = airline.option_to_purchase ? airline.option_to_purchase
+    : airline.optionToPurchase;
+  const totalAmountPayable = airline.total_amount_payable ? airline.total_amount_payable
+    : airline.totalAmountPayable;
   return (
     <section className="relative flex flex-auto flex-col sm:flex-row items-center justify-center sm:justify-start gap-3">
       <img className="flex-initial sm:flex-auto pl-0 mx-auto sm:mx-0 sm:pl-10 h-auto max-h-[40vh] sm:max-h-fit sm:h-[70%] w-auto sm:w-[55%] md:w-[60%] min-[900px]:w-[60%] lg:w-[65%] xl:w-[75%] object-contain object-center sm:object-[50%_30%]" src={imgSrc} alt="airline pic" />
@@ -52,7 +64,7 @@ const AirlineDetails = () => {
           <BiChevronRightCircle size={20} className="self-center fill-white ml-3 mt-[2px]" />
         </Link>
       </aside>
-      <Link to="/airlines">
+      <Link to={PreviousPath} state={{ startSlide }}>
         <svg
           className="absolute bottom-5 left-0 pointer-events-auto border border-[#97bf0f] bg-[#97bf0f] stroke-white
         fill-white cursor-pointer rounded-full rounded-l w-[60px] sm:w-[75px]"

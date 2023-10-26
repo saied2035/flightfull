@@ -5,7 +5,7 @@ import Airline from '../airline/airline';
 import airlineSlideContext from '../../../contexts';
 
 const UserAirlines = () => {
-  const displayArr = ['flex', 'min-[900px]:flex hidden', 'lg:flex hidden', '2xl:flex hidden'];
+  const displayArr = ['flex', 'min-[900px]:flex hidden', 'min-[1140px]:flex hidden', '2xl:flex hidden'];
   const userAirlines = useSelector((state) => state.airlineReducer.user_airlines);
   const { length } = userAirlines;
   const { slide, setIntersectionAirlines } = useContext(airlineSlideContext);
@@ -21,6 +21,7 @@ const UserAirlines = () => {
           key={airline.id}
           id={airline.id}
           slide={slide}
+          ownerId={airline.user_id}
           index={index}
           setIntersectionAirlines={setIntersectionAirlines}
           name={airline.name}

@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import Observer from '../observer/observer';
 
 const NextArrow = ({ slide, setSlide, intersectionAirlines }) => {
   const [disabledNextArrow, setDisabledNextArrow] = useState(false);
   const intersectionObserver = new Observer({ type: 'intersection', setDisabledNextArrow });
+  const { pathname } = useLocation();
   useEffect(() => {
     const airlines = document.querySelectorAll('.airline');
     const lastAirline = airlines[airlines.length - 1];
     intersectionObserver.observeIntersection(lastAirline);
-  }, []);
+  }, [pathname]);
   return (
     <svg
       className={`${disabledNextArrow ? `pointer-events-none bg-transparent stroke-[#efefef] fill-[#efefef] border-none 

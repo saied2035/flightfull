@@ -11,7 +11,7 @@ const options = {
   },
 };
 
-const createAirline = (body) => fetch(`${url}/auth/signup`, { ...options, body: JSON.stringify(body) })
+const createAirline = (body) => fetch(`${url}/airlines`, { ...options, body: JSON.stringify(body) })
   .then((data) => data.json())
   .catch(() => ({ error: 'Server is down.' }));
 

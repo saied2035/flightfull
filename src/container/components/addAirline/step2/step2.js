@@ -28,7 +28,7 @@ const Step2 = ({ step }) => {
           min={200}
           step={0.01}
           required={step === 2}
-          name="optionToPurchase"
+          name="option_to_purchase"
           placeholder="Option to purchase"
         />
         <input
@@ -40,7 +40,7 @@ const Step2 = ({ step }) => {
           min={200}
           step={0.01}
           required={step === 2}
-          name="totalAmountPayable"
+          name="total_amount_payable"
           placeholder="Total amount payable"
         />
       </fieldset>

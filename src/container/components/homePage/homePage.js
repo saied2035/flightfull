@@ -8,12 +8,14 @@ import AirlinesContainer from './airlinesContainer/airlinesContainer';
 import airlineSlideContext from '../contexts';
 
 const HomePage = () => {
-  const [allTab, setAllTab] = useState(true);
+  const location = useLocation();
+  const { pathname } = location;
+  const startSlide = location.state ? location.state.startSlide : 0;
+  const isAllAirlines = /(^\/$|^\/airlines$|^\/airlines\/$)/.test(pathname);
+  const [allTab, setAllTab] = useState(isAllAirlines);
   const [slidesLength, setSlidesLength] = useState(0);
   const [intersectionAirlines, setIntersectionAirlines] = useState(new Array(4).fill(null));
-  const [slide, setSlide] = useState(0);
-  const { pathname } = useLocation();
-  const isAllAirlines = /(^\/$|^\/airlines$|^\/airlines\/$)/.test(pathname);
+  const [slide, setSlide] = useState(startSlide);
   const {
     airlines_length: airlinesLength,
     user_airlines_length: userAirlinesLength,
