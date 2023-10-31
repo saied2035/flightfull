@@ -14,7 +14,6 @@ const Login = () => {
   const authStatus = useSelector((state) => state.authReducer.status);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ form });
     dispatch(login({ form, navigate, setError }));
   };
   useEffect(() => {

@@ -10,9 +10,9 @@ const Container = ({ authStatus }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isWhite = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$|^\/$|^\/reservations$)/.test(pathname);
+  const isWhite = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$|^\/$|^\/reservations$|^\/your_airlines\/$|^\/your_airlines$)/.test(pathname);
   useEffect(() => {
-    dispatch(isLoggedIn({ navigate, pathname, type: 'normalPage' }));
+    if (authStatus === 'idle') dispatch(isLoggedIn({ navigate, pathname, type: 'normalPage' }));
   }, []);
   return (
     authStatus === 200

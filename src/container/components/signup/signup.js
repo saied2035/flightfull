@@ -16,7 +16,6 @@ const Signup = () => {
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ form });
     dispatch(signup({ form, navigate, setError }));
   };
   useEffect(() => {
