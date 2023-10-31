@@ -4,7 +4,8 @@ import logo from '../flightful-logo.png';
 
 const DesktopNavbar = ({ routesArr, socialMediaArr }) => {
   const { pathname } = useLocation();
-  const isActive = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$)/.test(pathname);
+  const isActive = /(^\/airlines\/[0-9]+$|^\/airlines\/$|^\/airlines$|^\/your_airlines\/$|^\/your_airlines$)/
+    .test(pathname);
   const isAddNewAirlineAcitive = /airlines\/new/.test(pathname);
   return (
     <nav className="min-[900px]:flex hidden relative flex-col gap-y-12 min-[900px]:gap-y-12 w-[17%] h-screen border-r-2 border-r-[#f8f8f8] bg-white">

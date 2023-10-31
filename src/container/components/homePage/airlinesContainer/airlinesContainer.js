@@ -1,44 +1,40 @@
-import PropTypes from 'prop-types';
-import Airline from './airline/airline';
+import { useContext } from 'react';
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
+import AllAirlines from './allAirlines/allAirlines';
+import airlineSlideContext from '../../contexts';
+import UserAirlines from './userAirlines/userAirlines';
 
-const AirlinesContainer = ({
-  slide, length, staticAirlineList, setIntersectionAirlines,
-}) => {
-  const displayArr = ['flex', 'min-[900px]:flex hidden', 'lg:flex hidden', '2xl:flex hidden'];
+const AirlinesContainer = () => {
+  const displayArr = ['flex', 'min-[900px]:flex hidden', 'min-[1140px]:flex hidden', '2xl:flex hidden'];
+  const {
+    allTab, slide, setIntersectionAirlines, setSlide,
+  } = useContext(airlineSlideContext);
   return (
-    staticAirlineList.slice(slide, length).map((airline, index) => (
-      <Airline
-        key={airline.id}
-        id={airline.id}
+    <>
+      { allTab && (
+      <AllAirlines
+        displayArr={displayArr}
         slide={slide}
-        index={index}
         setIntersectionAirlines={setIntersectionAirlines}
-        name={airline.name}
-        description={airline.description}
-        display={index <= 3 ? displayArr[index] : 'hidden'}
-        imgSrc={airline.imgSrc}
-        fee={airline.fee}
-        optionToPurchase={airline.optionToPurchase}
-        totalAmountPayable={airline.totalAmountPayable}
-        socialMedia={airline.socialMedia}
+        setSlide={setSlide}
+        FaFacebookF={FaFacebookF}
+        FaLinkedinIn={FaLinkedinIn}
+        FaTwitter={FaTwitter}
       />
-    ))
+      ) }
+      {allTab === false && (
+      <UserAirlines
+        displayArr={displayArr}
+        slide={slide}
+        setIntersectionAirlines={setIntersectionAirlines}
+        setSlide={setSlide}
+        FaFacebookF={FaFacebookF}
+        FaLinkedinIn={FaLinkedinIn}
+        FaTwitter={FaTwitter}
+      />
+      )}
+    </>
   );
-};
-AirlinesContainer.propTypes = {
-  slide: PropTypes.number.isRequired,
-  length: PropTypes.number.isRequired,
-  setIntersectionAirlines: PropTypes.func.isRequired,
-  staticAirlineList: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    imgSrc: PropTypes.string.isRequired,
-    socialMedia: PropTypes.arrayOf(PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      image: PropTypes.func.isRequired,
-      name: PropTypes.string.isRequired,
-    })).isRequired,
-  }).isRequired).isRequired,
 };
 
 export default AirlinesContainer;

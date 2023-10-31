@@ -1,15 +1,23 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Observer from '../observer/observer';
 
 const NextArrow = ({ slide, setSlide, intersectionAirlines }) => {
   const [disabledNextArrow, setDisabledNextArrow] = useState(false);
   const intersectionObserver = new Observer({ type: 'intersection', setDisabledNextArrow });
+  const {
+    airlines_length: airlinesLength,
+    user_airlines_length: userAirlinesLength,
+  } = useSelector((state) => state.airlineReducer);
+  const { pathname } = useLocation();
+
   useEffect(() => {
     const airlines = document.querySelectorAll('.airline');
     const lastAirline = airlines[airlines.length - 1];
     intersectionObserver.observeIntersection(lastAirline);
-  }, []);
+  }, [pathname, airlinesLength, userAirlinesLength]);
   return (
     <svg
       className={`${disabledNextArrow ? `pointer-events-none bg-transparent stroke-[#efefef] fill-[#efefef] border-none 
@@ -21,8 +29,10 @@ const NextArrow = ({ slide, setSlide, intersectionAirlines }) => {
       height="64px"
       viewBox="0 0 50 50"
       onClick={() => {
-        intersectionAirlines[0].target.classList.add('animate-fade-out');
-        intersectionAirlines.forEach((airline, i) => {
+        const appeardAirlines = intersectionAirlines
+          .filter((airline) => (airline === null) === false);
+        appeardAirlines[0].target.classList.add('animate-fade-out');
+        appeardAirlines.forEach((airline, i) => {
           if (i > 0 && airline) airline.target.classList.add('animate-move-left');
         });
         setTimeout(() => {
