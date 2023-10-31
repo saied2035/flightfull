@@ -11,6 +11,7 @@ const imageToBase64 = (img, setForm) => {
   reader.readAsDataURL(img);
   reader.onloadend = () => setForm((form) => ({ ...form, img_src: reader.result }));
 };
+
 const AddAirline = () => {
   const ref = useRef(null);
   const [step, setStep] = useState(1);
@@ -25,6 +26,7 @@ const AddAirline = () => {
     twitter: null,
     linkedin: null,
   });
+  const [error, setError] = useState('');
   const [chars, setChars] = useState(0);
   const [textareaValue, setTextareaValue] = useState('');
   const [imageName, setImageName] = useState('Select image');
@@ -43,8 +45,7 @@ const AddAirline = () => {
             setStep(2);
             return;
           }
-          console.log('sending form', { form });
-          dispatch(createAirline({ form, navigate }));
+          dispatch(createAirline({ form, navigate, setError }));
           ref.current.reset();
           setForm({
             name: null,
@@ -61,7 +62,7 @@ const AddAirline = () => {
           setImageName('Select image');
           setChars(0);
         }}
-        onChange={(e) => {
+        onInput={(e) => {
           const key = e.target.name;
           const value = e.target.files && e.target.files[0] ? e.target.files[0] : e.target.value;
           if (key === 'img_src' && typeof value === 'object') {
@@ -70,6 +71,7 @@ const AddAirline = () => {
           }
           setForm({ ...form, [key]: value });
         }}
+        onFocus={() => setError('')}
         className="max-w-full flex-auto gap-y-3 w-full flex flex-col items-center overflow-hidden"
         ref={ref}
       >
@@ -83,6 +85,13 @@ const AddAirline = () => {
           setImageName={setImageName}
         />
         <Step2 step={step} />
+        { error.length > 0 && (
+        <p className="absolute bottom-10 text-[#ff0000] font-semibold text-center
+        max-[400px]:text-xs text-base"
+        >
+          { typeof error === 'string' ? error : error[0] }
+        </p>
+        ) }
         { step === 1 && (
         <button
           type="submit"

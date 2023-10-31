@@ -6,12 +6,13 @@ import airlinesRequests from './airlineApi/airlineApi';
 
 export const createAirline = createAsyncThunk(
   'airlines/createAirline', async (body) => {
-    const { form, navigate } = body;
+    const { form, navigate, setError } = body;
     const response = await airlinesRequests.createAirline(form);
-    console.log({ response });
     if (response.airlines) {
       const newAirline = response.airlines[0];
       const state = {
+        startSlide: 0,
+        previousPath: '/your_airlines',
         airlineId: newAirline.id,
         airline: {
           name: newAirline.name,
@@ -22,6 +23,19 @@ export const createAirline = createAsyncThunk(
         },
       };
       navigate(`/airlines/${newAirline.id}`, { state });
+    } else {
+      setError(response.error);
+    }
+    return response;
+  },
+);
+
+export const deleteAirline = createAsyncThunk(
+  'airlines/deleteAirline', async (body) => {
+    const { id, setSlide, slide } = body;
+    const response = await airlinesRequests.deleteAirline(id);
+    if (slide > 0) {
+      setSlide(slide - 1);
     }
     return response;
   },
@@ -92,6 +106,32 @@ const airlineSlice = createSlice({
       } else {
         modifier.pending = false;
         modifier.error = action.payload.error;
+      }
+    });
+
+    builder.addCase(createAirline.rejected, (state, action) => {
+      const modifier = state;
+      modifier.pending = false;
+      modifier.error = action.payload.error;
+    });
+    // delete airline
+    builder.addCase(deleteAirline.pending, (state) => {
+      const modifier = state;
+      modifier.pending = true;
+    });
+
+    builder.addCase(deleteAirline.fulfilled, (state, action) => {
+      const modifier = state;
+      if (action.payload.airlines) {
+        modifier.pending = false;
+        modifier.error = '';
+        modifier.airlines = action.payload.airlines;
+        modifier.airlines_length = action.payload.airlines.length;
+        modifier.user_airlines = action.payload.user_airlines;
+        modifier.user_airlines_length = action.payload.user_airlines.length;
+      } else {
+        modifier.pending = false;
+        modifier.error = action.payload.error;
         modifier.airlines = [];
         modifier.airlines_length = 0;
         modifier.user_airlines = [];
@@ -99,7 +139,7 @@ const airlineSlice = createSlice({
       }
     });
 
-    builder.addCase(createAirline.rejected, (state, action) => {
+    builder.addCase(deleteAirline.rejected, (state, action) => {
       const modifier = state;
       if (action.payload.error) {
         modifier.pending = false;

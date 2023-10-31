@@ -1,29 +1,28 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteAirline } from '../../../../../redux/airlineSlice/airlineSlice';
 
 const Airline = ({
   name, description, socialMedia, imgSrc, setIntersectionAirlines, index,
-  slide, id, ownerId, display, fee, optionToPurchase, totalAmountPayable,
+  slide, id, setSlide, ownerId, display, fee, optionToPurchase, totalAmountPayable,
 }) => {
-  const { pathname: PreviousPath } = useLocation();
+  const { pathname: previousPath } = useLocation();
   const userId = useSelector((state) => state.authReducer.user_id);
   const ref = useRef(null);
-  const airlineObserver = new IntersectionObserver((entries) => {
+  const dispatch = useDispatch();
+  const airlineObserver = new IntersectionObserver((entries, observer) => {
     const { isIntersecting } = entries[0];
     if (isIntersecting) {
       setIntersectionAirlines((oldArray) => [...oldArray.slice(0, index),
         entries[0], ...oldArray.slice(index + 1, oldArray.length)]);
     }
+    observer.unobserve(entries[0].target);
   });
   useEffect(() => {
     airlineObserver.observe(ref.current);
-    return () => {
-      setIntersectionAirlines(new Array(4).fill(null));
-      airlineObserver.disconnect();
-    };
-  }, [slide]);
+  }, [index, window.innerWidth]);
   return (
     <div
       ref={ref}
@@ -34,7 +33,7 @@ const Airline = ({
         to={`/airlines/${id}`}
         className="min-[900px]:h-[70%] h-auto"
         state={{
-          PreviousPath,
+          previousPath,
           startSlide: slide,
           airlineId: id,
           airline: {
@@ -54,7 +53,13 @@ const Airline = ({
       {userId === ownerId && (
       <aside className="flex flex-wrap gap-4 my-2 w-full items-center sm:text-base text-sm">
         <span className="text-center mx-auto">Created by you</span>
-        <button type="button" className=" text-white bg-[#97bf0e] px-3 py-2 rounded-full mx-auto">Delete</button>
+        <button
+          type="button"
+          className=" text-white bg-[#97bf0e] px-3 py-2 rounded-full mx-auto"
+          onClick={() => dispatch(deleteAirline({ id, setSlide, slide }))}
+        >
+          Delete
+        </button>
       </aside>
       )}
       <ul className="flex gap-x-3 justify-center">
@@ -81,6 +86,7 @@ Airline.propTypes = {
   totalAmountPayable: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   slide: PropTypes.number.isRequired,
+  setSlide: PropTypes.func.isRequired,
   display: PropTypes.string.isRequired,
   setIntersectionAirlines: PropTypes.func.isRequired,
   imgSrc: PropTypes.string.isRequired,

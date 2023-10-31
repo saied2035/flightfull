@@ -1,14 +1,12 @@
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { FaFacebookF, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
-import { useContext } from 'react';
 import Airline from '../airline/airline';
-import airlineSlideContext from '../../../contexts';
 
-const AllAirlines = () => {
-  const displayArr = ['flex', 'min-[900px]:flex hidden', 'min-[1140px]:flex hidden', '2xl:flex hidden'];
+const AllAirlines = ({
+  displayArr, slide, setIntersectionAirlines, setSlide, FaFacebookF, FaLinkedinIn, FaTwitter,
+}) => {
   const airlines = useSelector((state) => state.airlineReducer.airlines);
   const { length } = airlines;
-  const { slide, setIntersectionAirlines } = useContext(airlineSlideContext);
   return (
     airlines.slice(slide, length).map((airline, index) => {
       const socialMedia = [
@@ -21,6 +19,7 @@ const AllAirlines = () => {
           key={airline.id}
           id={airline.id}
           slide={slide}
+          setSlide={setSlide}
           ownerId={airline.user_id}
           index={index}
           setIntersectionAirlines={setIntersectionAirlines}
@@ -38,4 +37,13 @@ const AllAirlines = () => {
   );
 };
 
+AllAirlines.propTypes = {
+  displayArr: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  slide: PropTypes.number.isRequired,
+  setSlide: PropTypes.func.isRequired,
+  setIntersectionAirlines: PropTypes.func.isRequired,
+  FaFacebookF: PropTypes.func.isRequired,
+  FaLinkedinIn: PropTypes.func.isRequired,
+  FaTwitter: PropTypes.func.isRequired,
+};
 export default AllAirlines;

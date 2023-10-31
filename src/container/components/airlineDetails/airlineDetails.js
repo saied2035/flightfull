@@ -6,7 +6,7 @@ const AirlineDetails = () => {
   const airlines = useSelector((state) => state.airlineReducer.airlines);
   const location = useLocation();
   const { pathname } = location;
-  const PreviousPath = location.state ? location.state.PreviousPath : '/airlines';
+  const previousPath = location.state ? location.state.previousPath : '/airlines';
   const startSlide = location.state ? location.state.startSlide : 0;
   const filteredAirline = airlines.filter((airline) => airline.id
   === Number(pathname.replace(/[^0-9]/g, '')));
@@ -64,7 +64,7 @@ const AirlineDetails = () => {
           <BiChevronRightCircle size={20} className="self-center fill-white ml-3 mt-[2px]" />
         </Link>
       </aside>
-      <Link to={PreviousPath} state={{ startSlide }}>
+      <Link to={previousPath} state={{ startSlide }}>
         <svg
           className="absolute bottom-5 left-0 pointer-events-auto border border-[#97bf0f] bg-[#97bf0f] stroke-white
         fill-white cursor-pointer rounded-full rounded-l w-[60px] sm:w-[75px]"

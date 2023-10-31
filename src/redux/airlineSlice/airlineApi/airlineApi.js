@@ -15,6 +15,10 @@ const createAirline = (body) => fetch(`${url}/airlines`, { ...options, body: JSO
   .then((data) => data.json())
   .catch(() => ({ error: 'Server is down.' }));
 
-const airlinesRequests = { createAirline };
+const deleteAirline = (id) => fetch(`${url}/airlines/${id}`, { ...options, method: 'DELETE' })
+  .then((data) => data.json())
+  .catch(() => ({ error: 'Server is down.' }));
+
+const airlinesRequests = { createAirline, deleteAirline };
 
 export default airlinesRequests;

@@ -25,6 +25,7 @@ const HomePage = () => {
     slide,
     setSlide,
     listLength: isAllAirlines ? airlinesLength : userAirlinesLength,
+    setIntersectionAirlines,
     setSlidesLength,
   });
   const shouldArrowsGetRendered = (allTab && airlinesLength > slidesLength)
@@ -81,7 +82,10 @@ const HomePage = () => {
           intersectionAirlines={intersectionAirlines}
         />
         )}
-        <airlineSlideContext.Provider value={{ slide, setIntersectionAirlines, allTab }}>
+        <airlineSlideContext.Provider value={{
+          slide, setIntersectionAirlines, allTab, setSlide,
+        }}
+        >
           <AirlinesContainer />
         </airlineSlideContext.Provider>
         {shouldArrowsGetRendered && (

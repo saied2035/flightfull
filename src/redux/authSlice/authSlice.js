@@ -5,7 +5,6 @@ export const signup = createAsyncThunk(
   'authentication/signup', async (body) => {
     const { form, navigate, setError } = body;
     const response = await authRequests.signup(form);
-    console.log({ response });
     if (response.status && response.status === 200) {
       navigate('/');
     }
@@ -20,7 +19,6 @@ export const login = createAsyncThunk(
   'authentication/login', async (body) => {
     const { form, navigate, setError } = body;
     const response = await authRequests.login(form);
-    console.log({ response });
     if (response.status && response.status === 200) {
       navigate('/');
     }
@@ -34,7 +32,6 @@ export const login = createAsyncThunk(
 export const signout = createAsyncThunk(
   'authentication/signout', async (navigate) => {
     const response = await authRequests.signout();
-    console.log({ response });
     if (response.status === 200) {
       navigate('/login');
       return { status: 401, error: '', user_id: null };
@@ -48,7 +45,6 @@ export const isLoggedIn = createAsyncThunk(
   'authentication/isLoggedIn', async (body) => {
     const { navigate, pathname, type } = body;
     const response = await authRequests.isLoggedIn();
-    console.log({ response });
     if (response.status && (response.status === 401 || response.status === 404)) {
       navigate(/^\/(login|signup)$/.test(pathname) ? pathname : '/login');
     } else {
