@@ -132,10 +132,6 @@ const airlineSlice = createSlice({
       } else {
         modifier.pending = false;
         modifier.error = action.payload.error;
-        modifier.airlines = [];
-        modifier.airlines_length = 0;
-        modifier.user_airlines = [];
-        modifier.user_airlines_length = 0;
       }
     });
 
@@ -144,10 +140,6 @@ const airlineSlice = createSlice({
       if (action.payload.error) {
         modifier.pending = false;
         modifier.error = action.payload.error;
-        modifier.airlines = [];
-        modifier.airlines_length = 0;
-        modifier.user_airlines = [];
-        modifier.user_airlines_length = 0;
       }
     });
   },
