@@ -1,24 +1,39 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import airplane from '../airplane.png';
 import cities from './cities';
+import { createReservation } from '../../../redux/reservationSlice/reservationSlice';
 
+const handleDate = (date, setForm, form) => {
+  const reservationDate = new Date(date).toISOString().split('T')[0];
+  const expiredDate = new Date(reservationDate);
+  expiredDate.setDate(expiredDate.getDate() + 1);
+  setForm({ ...form, date: reservationDate, expiration_date: expiredDate.toISOString().split('T')[0] });
+};
 const ReserveAirline = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const airlines = useSelector((state) => state.airlineReducer.airlines);
   const location = useLocation();
-  const [airlineId, setAirlineId] = useState(location.state ? location.state.airlineId : undefined);
+  const [airlineId, setAirlineId] = useState(location.state ? Number(location.state.airlineId)
+    : undefined);
   const ref = useRef(null);
-  const [form, setForm] = useState({ airlineId: null, city: null, date: null });
+  const [form, setForm] = useState({
+    airline_id: null, city: null, date: null, expiration_date: null,
+  });
+  const [error, setError] = useState('');
   useEffect(() => {
-    setForm({ ...form, airlineId });
+    setForm({ ...form, airline_id: airlineId });
     window.history.replaceState({}, document.title);
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ form });
-    console.log('submit reservation');
-    setForm({ airline: null, city: null, date: null });
+    dispatch(createReservation({ form, navigate, setError }));
+    setForm({
+      airline_id: null, city: null, date: null, expiration_date: null,
+    });
     setAirlineId(undefined);
     ref.current.reset();
   };
@@ -45,9 +60,14 @@ const ReserveAirline = () => {
       <form
         onChange={(e) => {
           const key = e.target.name;
-          const { value } = e.target;
+          const value = key === 'airline_id' ? Number(e.target.value) : e.target.value;
+          if (key === 'date') {
+            handleDate(value, setForm, form);
+            return;
+          }
           setForm({ ...form, [key]: value });
         }}
+        onFocus={() => setError('')}
         ref={ref}
         className="px-[2.5%] sm:px-0 z-10 flex flex-col gap-y-3 max-w-full"
         onSubmit={(e) => handleSubmit(e)}
@@ -77,10 +97,10 @@ const ReserveAirline = () => {
           min={allowedDate}
         />
         <select
-          value={form.airlineId || undefined}
+          value={form.airline_id || undefined}
           disabled={(airlineId === undefined) === false}
           required
-          name="airlineId"
+          name="airline_id"
           className="cursor-pointer focus:cursor-default
         bg-[url('./container/components/reserveAirline/down-arrow.png')] bg-[center_right_2px] bg-no-repeat
         appearance-none outline-0 p-3 rounded-2xl bg-transparent text-white border border-white
@@ -100,6 +120,13 @@ const ReserveAirline = () => {
         <button type="submit" className="w-fit ml-auto py-3 px-9 mt-2 text-[#96bf01] bg-white rounded-3xl">
           Book now
         </button>
+        { error.length > 0 && (
+        <p className="absolute bottom-10 text-[#ff0000] font-semibold text-center
+        max-[400px]:text-xs text-base"
+        >
+          { typeof error === 'string' ? error : error[0] }
+        </p>
+        ) }
       </form>
     </section>
   );
