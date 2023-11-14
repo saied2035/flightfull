@@ -18,10 +18,23 @@ const login = (body) => fetch(`${url}/auth/login`, { ...options, body: JSON.stri
   .then((data) => data.json())
   .catch(() => ({ error: 'Server is down.' }));
 
-const signout = () => fetch(`${url}/auth/signout`, { ...options, method: 'DELETE' })
+const signout = () => fetch(`${url}/auth/signout`, {
+  ...options,
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  },
+})
   .catch(() => ({ error: 'Server is down.' }));
 
-const isLoggedIn = () => fetch(`${url}/auth/login_check`, options)
+const isLoggedIn = () => fetch(`${url}/auth/login_check`, {
+  ...options,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  },
+})
   .then((data) => data.json())
   .catch(() => ({ status: 401 }));
 

@@ -6,6 +6,7 @@ export const signup = createAsyncThunk(
     const { form, navigate, setError } = body;
     const response = await authRequests.signup(form);
     if (response.status && response.status === 200) {
+      localStorage.setItem('token', response.token);
       navigate('/');
     }
     if (response.errors || response.error) {
@@ -21,6 +22,7 @@ export const login = createAsyncThunk(
     const response = await authRequests.login(form);
     if (response.status && response.status === 200) {
       navigate('/');
+      localStorage.setItem('token', response.token);
     }
     if (response.errors || response.error) {
       setError(response.error || response.errors);
@@ -33,6 +35,7 @@ export const signout = createAsyncThunk(
   'authentication/signout', async (navigate) => {
     const response = await authRequests.signout();
     if (response.status === 200) {
+      localStorage.removeItem('token');
       navigate('/login');
       return { status: 401, error: '', user_id: null };
     }

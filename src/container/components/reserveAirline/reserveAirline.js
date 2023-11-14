@@ -29,7 +29,6 @@ const ReserveAirline = () => {
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ form });
     dispatch(createReservation({ form, navigate, setError }));
     setForm({
       airline_id: null, city: null, date: null, expiration_date: null,
