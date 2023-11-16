@@ -33,9 +33,9 @@ export const login = createAsyncThunk(
 
 export const signout = createAsyncThunk(
   'authentication/signout', async (navigate) => {
+    localStorage.removeItem('token');
     const response = await authRequests.signout();
-    if (response.status === 200) {
-      localStorage.removeItem('token');
+    if (response.status === 401) {
       navigate('/login');
       return { status: 401, error: '', user_id: null };
     }

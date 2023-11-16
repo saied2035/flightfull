@@ -23,12 +23,18 @@ module.exports = {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(100%)' },
         },
+        breath: {
+          '0%': { transform: 'scale(1.05)' },
+          '50%': { transform: 'scale(0.95)' },
+          '100%': { transform: 'scale(1.05)' },
+        },
       },
       animation: {
         'fade-in': 'fade-in 1s forwards',
         'fade-out': 'fade-out 1s forwards',
         'move-left': 'move-left 1s forwards',
         'move-right': 'move-right 1s forwards',
+        breath: 'breath 1s infinite forwards',
       },
     },
   },

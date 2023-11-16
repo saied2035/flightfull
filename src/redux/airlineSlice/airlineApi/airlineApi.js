@@ -1,3 +1,5 @@
+import JSONbig from 'json-bigint';
+
 const url = process.env.REACT_APP_BASE_URL;
 const options = {
   method: 'POST',
@@ -12,12 +14,15 @@ const options = {
   },
 };
 
+const reviver = (key, value) => (key === 'id'
+|| (key === 'user_id' && value !== null) || (key === 'airline_id' && value !== null) ? `${value}` : value);
+
 const createAirline = (body) => fetch(`${url}/airlines`, { ...options, body: JSON.stringify(body) })
-  .then((data) => data.json())
+  .then((data) => data.text()).then((data) => JSONbig.parse(data, reviver))
   .catch(() => ({ error: 'Server is down.' }));
 
 const deleteAirline = (id) => fetch(`${url}/airlines/${id}`, { ...options, method: 'DELETE' })
-  .then((data) => data.json())
+  .then((data) => data.text()).then((data) => JSONbig.parse(data, reviver))
   .catch(() => ({ error: 'Server is down.' }));
 
 const airlinesRequests = { createAirline, deleteAirline };

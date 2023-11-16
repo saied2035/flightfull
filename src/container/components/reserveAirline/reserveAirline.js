@@ -16,7 +16,7 @@ const ReserveAirline = () => {
   const navigate = useNavigate();
   const airlines = useSelector((state) => state.airlineReducer.airlines);
   const location = useLocation();
-  const [airlineId, setAirlineId] = useState(location.state ? Number(location.state.airlineId)
+  const [airlineId, setAirlineId] = useState(location.state ? location.state.airlineId
     : undefined);
   const ref = useRef(null);
   const [form, setForm] = useState({
@@ -59,7 +59,7 @@ const ReserveAirline = () => {
       <form
         onChange={(e) => {
           const key = e.target.name;
-          const value = key === 'airline_id' ? Number(e.target.value) : e.target.value;
+          const { value } = e.target;
           if (key === 'date') {
             handleDate(value, setForm, form);
             return;
@@ -119,7 +119,7 @@ const ReserveAirline = () => {
         <button type="submit" className="w-fit ml-auto py-3 px-9 mt-2 text-[#96bf01] bg-white rounded-3xl">
           Book now
         </button>
-        { error.length > 0 && (
+        { error && error.length > 0 && (
         <p className="absolute bottom-10 text-[#ff0000] font-semibold text-center
         max-[400px]:text-xs text-base"
         >

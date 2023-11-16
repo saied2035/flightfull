@@ -78,7 +78,7 @@ socialMedia.map((link) => (
 };
 
 Airline.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   fee: PropTypes.number.isRequired,
@@ -90,7 +90,7 @@ Airline.propTypes = {
   display: PropTypes.string.isRequired,
   setIntersectionAirlines: PropTypes.func.isRequired,
   imgSrc: PropTypes.string.isRequired,
-  ownerId: PropTypes.number,
+  ownerId: PropTypes.string,
   socialMedia: PropTypes.arrayOf(PropTypes.shape({
     url: PropTypes.string.isRequired,
     image: PropTypes.func.isRequired,

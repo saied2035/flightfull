@@ -9,7 +9,7 @@ const AirlineDetails = () => {
   const previousPath = location.state ? location.state.previousPath : '/airlines';
   const startSlide = location.state ? location.state.startSlide : 0;
   const filteredAirline = airlines.filter((airline) => airline.id
-  === Number(pathname.replace(/[^0-9]/g, '')));
+  === pathname.replace(/[^0-9]/g, ''));
   const airlineId = location.state ? location.state.airlineId : filteredAirline[0].id;
   const airline = location.state ? location.state.airline : filteredAirline[0];
   const { name, fee } = airline;
