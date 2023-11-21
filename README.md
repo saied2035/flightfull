@@ -19,7 +19,7 @@
 - [📝 License](#license)
 
 
-# 📖 Fligtfull <a name="about-project"></a>
+# 📖 Flightfull <a name="about-project"></a>
 
 **Flightfull** is a travel website simulator that allows users to book flights with top airlines and add their favorite airlines. All backend operations are handled through a REST API.
 
