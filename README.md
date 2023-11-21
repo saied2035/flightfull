@@ -54,8 +54,6 @@
 
 ### Key Features <a name="key-features"></a>
 
-> Describe between 1-3 key features of the application.
-
 - **Users can book flight to any part of the world with top airlines**
 - **Users can add airlines they prefer**
 - **Users can managetheir airlines and reservations**
