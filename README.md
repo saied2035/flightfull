@@ -56,9 +56,9 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **Users can book flight to any part of the world with top airlines**
+- **Users can book flights to any part of the world with top airlines**
 - **Users can add airlines they prefer**
-- **Users can managetheir airlines and reservations**
+- **Users can manage their airlines and reservations**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -70,13 +70,13 @@
 
 ## 💻 Getting Started <a name="getting-started"></a>
 
-To get a local copy up and running, follow these steps.
+If you want to get a local copy up and running, please follow these steps.
 
 ### Prerequisites
 
-In order to run this project you need:
+To run this project, you need:
   - Package manager like npm
-  - VS code editor or equivlant
+  - VS code editor or equivalent
 
 ### Setup
 
